@@ -1,0 +1,34 @@
+{
+    "DB":{
+        "Admin":{
+            "Write":{
+                "Host": "127.0.0.1:9200",
+                "Port": 3306,
+                "User": "root",
+                "Db": "fadmin",
+                "Pwd": "abc123456"
+            },
+            "Read":[
+                {
+                 "Host": "127.0.0.1:9200",
+                "Port": 3306,
+                "User": "root",
+                "Db": "fadmin",
+                "Pwd": "abc123456"
+                }
+            ],
+            "Show":true,
+            "MaxOpen":20,
+            "MaxIdle":10
+        },
+        "Wx":{
+             "Addr":"127.0.0.1",
+             "Write":"123",
+             "Read":["123","789"],
+             "Show":true,
+             "MaxOpen":20,
+             "MaxIdle":10
+         }
+
+    }
+}
