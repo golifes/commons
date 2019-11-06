@@ -64,7 +64,7 @@ func NewDb(c Config) *xorm.EngineGroup {
 	engine, err := xorm.NewEngineGroup("mysql", conn)
 	//
 	if err != nil || engine.Ping() != nil {
-		fmt.Println("err--->", err)
+		panic(err)
 	}
 	//
 	engine.SetMaxIdleConns(c.MaxIdle)

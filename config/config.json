@@ -1,34 +1,36 @@
 {
-    "DB":{
-        "Admin":{
-            "Write":{
-                "Host": "127.0.0.1:9200",
-                "Port": 3306,
-                "User": "root",
-                "Db": "fadmin",
-                "Pwd": "abc123456"
-            },
-            "Read":[
-                {
-                 "Host": "127.0.0.1:9200",
-                "Port": 3306,
-                "User": "root",
-                "Db": "fadmin",
-                "Pwd": "abc123456"
-                }
-            ],
-            "Show":true,
-            "MaxOpen":20,
-            "MaxIdle":10
-        },
-        "Wx":{
-             "Addr":"127.0.0.1",
-             "Write":"123",
-             "Read":["123","789"],
-             "Show":true,
-             "MaxOpen":20,
-             "MaxIdle":10
-         }
-
+  "db": {
+    "Admin": {
+      "Write": {
+        "Addr": "49.232.48.41",
+        "Port": 3306,
+        "User": "root",
+        "Db": "fadmin",
+        "Pwd": "abc123456"
+      },
+      "Read": [
+        {
+          "Addr": "49.232.48.41",
+          "Port": 3306,
+          "User": "root",
+          "Db": "fadmin",
+          "Pwd": "abc123456"
+        }
+      ],
+      "Show": true,
+      "MaxOpen": 20,
+      "MaxIdle": 10
     }
+  },
+  "rdx": {
+    "Dns": "111.231.114.205:6379",
+    "Pwd": "redis@2018",
+    "MinIdle": 5,
+    "PoolSize": 200,
+    "Db": 0
+  },
+  "Es": {
+    "Host": "49.232.48.41:9200",
+    "Index": ""
+  }
 }

@@ -8,21 +8,17 @@ import (
 )
 
 type Dao struct {
-	c       Config
-	engine  *xorm.EngineGroup
-	rdx     *redis.Client
-	es      *elastic.Client
-	esIndex string
+	c      Config
+	engine *xorm.EngineGroup
+	rdx    *redis.Client
+	es     *elastic.Client
+	//esIndex string
 }
 
 func NewDb(path string) *Dao {
 	//load 结构体绑定
 	var c Config
 	config.Load(path, &c)
-	es, index := config.LoadElastic(c.Es)
-	return &Dao{engine: config.NewDb(c.Db.Admin), rdx: config.LoadRedis(c.Rdx), es: es, esIndex: index}
+	//es, index := config.LoadElastic(c.Es)
+	return &Dao{engine: config.NewDb(c.Db.Admin), rdx: config.LoadRedis(c.Rdx)}
 }
-
-//func NewDb(path string) *Dao {
-//	return &Dao{config.NewConfig(path), config.NewDb()}
-//}
