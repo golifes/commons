@@ -49,14 +49,14 @@ func (d Dao) findOne(bean interface{}, table, orderBy string, query []string, va
 	var count int64
 	var err error
 	if len(query) == 0 {
-		count, err = d.engine.Table(table).Limit(ps, ps*pn).OrderBy(orderBy).FindAndCount(bean)
+		count, err = d.engine.Table(table).Limit(ps, ps*(pn-1)).OrderBy(orderBy).FindAndCount(bean)
 		if utils.CheckError(err, count) {
 			return bean, count
 		}
 		return nil, 0
 
 	} else {
-		count, err = d.engine.Table(table).Where(strings.Join(query, " "), values...).Limit(ps, ps*pn).OrderBy(orderBy).FindAndCount(bean)
+		count, err = d.engine.Table(table).Where(strings.Join(query, " "), values...).Limit(ps, ps*(pn-1)).OrderBy(orderBy).FindAndCount(bean)
 		if utils.CheckError(err, count) {
 			return bean, count
 		}
@@ -86,7 +86,7 @@ func (d Dao) join2Table(bean interface{}, table, alias, cols, orderBy string, ps
 	for _, v := range join {
 		session.Join(v[0].(string), v[1], v[2].(string))
 	}
-	count, err = session.Where(strings.Join(query, " "), values...).Limit(ps, ps*pn).OrderBy(orderBy).FindAndCount(bean)
+	count, err = session.Where(strings.Join(query, " "), values...).Limit(ps, ps*(pn-1)).OrderBy(orderBy).FindAndCount(bean)
 	if utils.CheckError(err, count) {
 		return bean, count
 	}

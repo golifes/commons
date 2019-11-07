@@ -46,10 +46,13 @@ type Wx struct {
 	Pn   int
 }
 
-type RetWx struct {
-	Id   int64  `json:"id" binding:"required"`
-	Biz  string `json:"biz" `
+type WxBiz struct {
+	Id   int64  `json:"id"`
 	Name string `json:"name"`
+	Biz  string `json:"biz"`
+	WxId string `json:"wx_id"`
+	Uin  string `json:"uin"`
+	Key  string `json:"key"`
 }
 
 type ForBidWx struct {

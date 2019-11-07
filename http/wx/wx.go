@@ -87,12 +87,8 @@ func (h HttpWxHandler) FindWxBiz(ctx app.GContext) {
 		query = append(query, " and id = ? ")
 		values = append(values, p.Id)
 	}
-	//type WeiXin struct {
-	//	Id   int64  `json:"id"`
-	//	Biz  string `json:"biz"`
-	//	Name string `json:"name"`
-	//}
-	weiXin := make([]entiyWx.RetWx, 0)
+
+	weiXin := make([]entiyWx.WxBiz, 0)
 
 	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin", "id desc ", query, values, ps, pn)
 	m := make(map[string]interface{})
