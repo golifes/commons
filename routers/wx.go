@@ -11,7 +11,7 @@ func (e *Engine) weiXin() {
 		r.GET("/list", e.WxList)
 		r.GET("/key", e.FindBizUinKey)
 		//r.GET("/getBiz", e.FindBizUinKey)
-
+		r.POST("/list", e.AddWxList)
 		//差一个入库详情页和列表数据接口
 	}
 }
