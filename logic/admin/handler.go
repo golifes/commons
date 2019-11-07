@@ -10,14 +10,14 @@ type LogicHandler interface {
 }
 
 type handler interface {
-	Exist(ctx context.Context, model interface{}) bool
+	Exist(ctx context.Context, bean interface{}) bool
 }
 type Logic struct {
 	db admin.DbHandler
 }
 
-func (l Logic) Exist(ctx context.Context, model interface{}) bool {
-	return l.db.Exist(ctx, model)
+func (l Logic) Exist(ctx context.Context, bean interface{}) bool {
+	return l.db.Exist(ctx, bean)
 }
 
 var _ LogicHandler = Logic{}

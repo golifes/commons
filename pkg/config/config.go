@@ -89,6 +89,7 @@ func LoadRedis(c Redis) (rdx *redis.Client) {
 func LoadElastic(s Es) (es *elastic.Client, index string) {
 	var err error
 	index = s.Index
+	fmt.Println(s)
 	es, err = elastic.NewSimpleClient(elastic.SetURL(s.Host))
 	if err != nil {
 		log.Printf("elastic conn is error %s", err)

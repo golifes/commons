@@ -95,7 +95,7 @@ func (d Dao) join2Table(bean interface{}, table, alias, cols, orderBy string, ps
 func (d Dao) delete2Table(beans [][2]interface{}) error {
 	/**
 	数据结构如下
-	[][2]{{id,model},{id,model}}
+	[][2]{{id,bean},{id,bean}}
 	*/
 	session := d.engine.NewSession()
 	defer session.Close()

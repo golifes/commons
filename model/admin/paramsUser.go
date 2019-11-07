@@ -1,7 +1,7 @@
 package admin
 
 /**
-用户相关的参数model
+用户相关的参数bean
 */
 
 //login

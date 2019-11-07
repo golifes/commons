@@ -1,6 +1,7 @@
 package snowflake
 
 import (
+	"commons/tools/utils"
 	"errors"
 	"sync"
 	"time"
@@ -29,8 +30,16 @@ type Node struct {
 	number    int64      // 当前毫秒已经生成的id序列号(从0开始累加) 1毫秒内最多生成4096个ID
 }
 
+func NewNode(nodeId int64) int64 {
+	node, err := newNode(nodeId)
+	if utils.CheckError(err, node) {
+		return node.Id()
+	}
+	return 0
+}
+
 // 实例化一个工作节点
-func NewNode(nodeId int64) (*Node, error) {
+func newNode(nodeId int64) (*Node, error) {
 	// 要先检测workerId是否在上面定义的范围内
 	if nodeId < 0 || nodeId > workerMax {
 		return nil, errors.New("Worker ID excess of quantity")
