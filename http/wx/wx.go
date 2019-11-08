@@ -10,7 +10,6 @@ import (
 	"fmt"
 	"net/http"
 	"strings"
-	"time"
 )
 
 /**
@@ -181,7 +180,7 @@ func (h HttpWxHandler) FindBizUinKey(ctx app.GContext) {
 func (h HttpWxHandler) AddWxList(ctx app.GContext) {
 	g := app.G{ctx}
 
-	var p entiyWx.ParamsAddWxList
+	var p entiyWx.List
 	code := e.Success
 	if !utils.CheckError(ctx.ShouldBindJSON(&p), "addList") {
 		code = e.ParamError
@@ -189,29 +188,34 @@ func (h HttpWxHandler) AddWxList(ctx app.GContext) {
 		return
 	}
 
-	ids := utils.FindBizStr(p.Url)
-	biz := ""
-	var w wx.WeiXinList
-	if ids != nil {
-		biz = ids[0]
-		w.Id = p.Id
-		w.Biz = biz
-		w.ArticleId = utils.EncodeMd5(strings.Join(ids, "_"))
-	} else {
-		//log  url 提取idx等参数异常
-		code = e.ParamError
-		g.Json(http.StatusOK, code, "")
-		return
-	}
+	var w wx.List
 	//todo 先查询ArticleId是否存在，存在就不入库，不存在就存在入库
+	w.ArticleId = p.ArticleId
 	if h.logic.Exist(g.NewContext(ctx), &w) {
 		g.Json(http.StatusOK, e.Errors, "")
 		return
 	}
-	w.Ptime = time.Unix(int64(p.Ptime), 0)
-	w.Url = p.Url
-	w.Title = p.Title
-	if !utils.CheckError(h.logic.Insert(g.NewContext(ctx), w), "insert addList") {
+	err := h.logic.Insert(g.NewContext(ctx), p)
+	if !utils.CheckError(err, "insert addList") {
+		code = e.Errors
+	}
+	g.Json(http.StatusOK, code, "")
+	return
+}
+
+func (h HttpWxHandler) AddDetail(ctx app.GContext) {
+	g := app.G{ctx}
+
+	var p entiyWx.List
+	code := e.Success
+	if !utils.CheckError(ctx.ShouldBindJSON(&p), "addList") {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
+	p.ContentStyle = strings.ReplaceAll(p.ContentStyle, "data-src", "src")
+	b := h.logic.InsertEs(p.ArticleId, p)
+	if !b {
 		code = e.Errors
 	}
 	g.Json(http.StatusOK, code, "")

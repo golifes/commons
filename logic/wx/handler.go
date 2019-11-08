@@ -7,6 +7,7 @@ import (
 
 type LogicHandler interface {
 	handler
+	EsHandler
 }
 
 type handler interface {
@@ -26,8 +27,17 @@ type handler interface {
 	Insert(ctx context.Context, beans ...interface{}) error //事物
 	Delete2Table(beans [][2]interface{}) error              //事物
 }
+
+type EsHandler interface {
+	InsertEs(id string, bean interface{}) bool
+}
+
 type Logic struct {
 	db wx.DbHandler
+}
+
+func (l Logic) InsertEs(id string, bean interface{}) bool {
+	return l.db.InsertEs(id, bean)
 }
 
 func (l Logic) Exist(ctx context.Context, bean ...interface{}) bool {
@@ -59,11 +69,11 @@ func (l Logic) Join2Table(ctx context.Context, bean interface{}, table, alias, c
 }
 
 func (l Logic) Insert(ctx context.Context, beans ...interface{}) error {
-	panic("implement me")
+	return l.db.Insert(ctx, beans...)
 }
 
 func (l Logic) Delete2Table(beans [][2]interface{}) error {
-	panic("implement me")
+	return l.db.Delete2Table(beans)
 }
 
 var _ LogicHandler = Logic{}

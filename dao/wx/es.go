@@ -15,8 +15,9 @@ es添加数据
 */
 
 func (d Dao) addEsOne(id string, bean interface{}) bool {
+
 	if bytes, err := json.Marshal(bean); utils.CheckError(err, bytes) {
-		do, err := d.es.Index().Index(d.esIndex).Id(id).BodyJson(bytes).Do(context.Background())
+		do, err := d.es.Index().Index(d.esIndex).Id(id).BodyString(string(bytes)).Do(context.Background())
 		if utils.CheckError(err, do) {
 			return true
 		}

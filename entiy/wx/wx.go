@@ -76,9 +76,36 @@ type Ps struct {
 	Ps int `json:"ps"`
 }
 
-type ParamsAddWxList struct {
-	Id    int64  `json:"id"`
-	Url   string `json:"url"  binding:"required" `   //文章url
-	Title string `json:"title"  binding:"required" ` //文章标题
-	Ptime int64  `json:"ptime"`                      //发布时间
+type List struct {
+	ArticleId              string `json:"article_id" xorm:"article_id"` //主键id
+	Biz                    string `json:"biz"`                          //
+	Mid                    int    `json:"mid"`                          //
+	Idx                    int    `json:"idx"`                          //
+	OwId                   int    `json:"ow_id"`                        //自定义微信id
+	Oid                    int    `json:"oid" xorm:"oid"`               //原始id
+	AudioFileid            int    `json:"audio_fileid" xorm:"audio_fileid"`
+	Title                  string `json:"title"  xorm:"title"`
+	ContentURL             string `json:"content_url" xorm:"content_url"`
+	SourceURL              string `json:"source_url" xorm:"source_url"`
+	Cover                  string `json:"cover" xorm:"cover"`
+	Author                 string `json:"author" xorm:"author"`
+	DelFlag                int    `json:"del_flag" xorm:"del_flag"`
+	PlayUrl                string `json:"play_url" xorm:"play_url"`
+	Content                string `json:"content" xorm:"content"`
+	ItemShowType           int    `json:"item_show_type" xorm:"item_show_type"`
+	MaliciousTitleReasonID int    `json:"malicious_title_reason_id" xorm:"malicious_title_reason_id"`
+	Digest                 string `json:"digest" xorm:"digest"`
+	Fileid                 int    `json:"fileid" xorm:"fileid"`
+	CopyrightStat          int    `json:"copyright_stat" xorm:"copyright_stat"`
+	Duration               int    `json:"duration" xorm:"duration"`
+	MaliciousContentType   int    `json:"malicious_content_type" xorm:"malicious_content_type"`
+	Subtype                int    `json:"subtype" xorm:"subtype"`
+	Type                   int    `json:"type" xorm:"type"`
+	Ptime                  int64  `json:"ptime" xorm:"ptime"`
+	Fakeid                 string `json:"fakeid" xorm:"fakeid"`
+	Status                 int    `json:"status" xorm:"status"`
+	NickName               string `json:"nick_name"  xorm:"-"`
+	ContentStyle           string `json:"content_style"  xorm:"-"`
+	Ctime                  int64  `json:"ctime" `
+	Mtime                  int64  `json:"mtime"  xorm:"-"`
 }

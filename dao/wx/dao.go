@@ -16,6 +16,10 @@ type Dao struct {
 	esIndex string
 }
 
+func (d Dao) InsertEs(id string, bean interface{}) bool {
+	return d.addEsOne(id, bean)
+}
+
 func NewDb(path string) *Dao {
 	//load 结构体绑定
 	var c Config
@@ -53,7 +57,7 @@ func (d Dao) Join2Table(ctx context.Context, bean interface{}, table, alias, col
 }
 
 func (d Dao) Insert(ctx context.Context, beans ...interface{}) error {
-	return d.insertMany(beans)
+	return d.insertMany(beans...)
 }
 
 func (d Dao) Delete2Table(beans [][2]interface{}) error {

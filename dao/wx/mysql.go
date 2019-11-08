@@ -13,7 +13,7 @@ func (d Dao) insertOne(beans ...interface{}) error {
 
 func (d Dao) insertMany(beans ...interface{}) error {
 	if beans == nil {
-		return errors.New("模型为空")
+		return errors.New("model is nil")
 	}
 	session := d.engine.NewSession()
 	defer session.Close()
@@ -24,7 +24,7 @@ func (d Dao) insertMany(beans ...interface{}) error {
 	for _, bean := range beans {
 		_, err := tx.Session().Insert(bean)
 		if err != nil {
-			err = tx.RollbackTrans()
+			defer tx.RollbackTrans()
 			return err
 		}
 	}

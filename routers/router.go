@@ -11,6 +11,8 @@ func InitRouter(port string, path string, node int64) *Engine {
 		return port
 	},
 	}
+	r.Use(gin.Recovery())
+	r.Use(gin.Logger())
 
 	r.weiXin()
 	r.Engine.Run(":8080")

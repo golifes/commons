@@ -27,6 +27,7 @@ type MysqlHandler interface {
 }
 
 type EsHandler interface {
+	InsertEs(id string, bean interface{}) bool
 }
 
 type RdxHandler interface {
