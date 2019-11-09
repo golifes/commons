@@ -126,27 +126,27 @@ func (h HttpWxHandler) WxList(ctx app.GContext) {
 		values = append(values, fmt.Sprintf("%s%s%s", "%", p.Title, "%"))
 	}
 
-	if p.Id != 0 {
-		query = append(query, " and id = ? ")
-		values = append(values, p.Id)
+	if p.OwId != 0 {
+		query = append(query, " and OwId = ? ")
+		values = append(values, p.OwId)
 	}
 
 	if p.StartTime.Unix() > 0 {
-		query = append(query, " and public_time >= ? ")
+		query = append(query, " and ptime >= ? ")
 		values = append(values, p.StartTime)
 	}
 
 	if p.EndTime.Unix() > 0 {
-		query = append(query, " and public_time <= ? ")
+		query = append(query, " and ptime <= ? ")
 		values = append(values, p.StartTime)
 	}
-	oderBy := "id desc "
+	oderBy := "ptime desc "
 	if p.OrderBy != "" {
 		oderBy = p.OrderBy
 	}
-	weiXin := make([]wx.WeiXinList, 0)
+	weiXin := make([]entiyWx.WeiXinList, 0)
 	//
-	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin_list", oderBy, query, values, ps, pn)
+	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "list", oderBy, query, values, ps, pn)
 	m := make(map[string]interface{})
 	m["count"] = count
 	m["list"] = list
@@ -220,4 +220,28 @@ func (h HttpWxHandler) AddDetail(ctx app.GContext) {
 	}
 	g.Json(http.StatusOK, code, "")
 	return
+}
+
+func (h HttpWxHandler) UpdateSpiderTime(ctx app.GContext) {
+	g := app.G{ctx}
+
+	var p entiyWx.SpiderTime
+	code := e.Success
+	if !utils.CheckError(ctx.ShouldBindJSON(&p), "UpdateSpiderTime") {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
+	cols := []string{}
+	if p.Num == 0 {
+		cols = append(cols, "stime")
+	} else {
+		cols = append(cols, "stime", "num")
+	}
+	affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Stime: p.Stime}, cols, []string{" biz = ?"}, []interface{}{p.Biz})
+	if !utils.CheckError(err, affect) {
+		g.Json(http.StatusOK, e.UpdateWxError, p.Biz)
+	} else {
+		g.Json(http.StatusOK, e.Success, affect)
+	}
 }

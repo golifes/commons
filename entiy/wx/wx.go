@@ -61,7 +61,7 @@ type ForBidWx struct {
 
 //获取微信文章列表数据
 type WxList struct {
-	Id        int64     `json:"id"`                      //公号id
+	OwId      int64     `json:"ow_id"`                   //公号id
 	ArticleId string    `json:"article_id"`              //文章id
 	Title     string    `json:"title"`                   //标题
 	Forbid    int       `json:"forbid" xorm:"default 1"` //是否被禁用
@@ -108,4 +108,26 @@ type List struct {
 	ContentStyle           string `json:"content_style"  xorm:"-"`
 	Ctime                  int64  `json:"ctime" `
 	Mtime                  int64  `json:"mtime"  xorm:"-"`
+}
+
+type SpiderTime struct {
+	Biz   string `json:"biz" binding:"required"`
+	Stime int64  `json:"stime" binding:"required"`
+	Num   int    `json:"pn"`
+}
+
+type WeiXinList struct {
+	OwId       int64  `json:"ow_id"`                   //公号id
+	Biz        string `json:"biz"`                     //
+	ArticleId  string `json:"article_id"`              //文章id
+	Title      string `json:"title"`                   //标题
+	Digest     string `json:"digest"`                  //摘要
+	ContentUrl string `json:"content_url"`             //url
+	SourceUrl  string `json:"source_url"`              //source_url
+	Forbid     int    `json:"forbid" xorm:"default 1"` //是否被禁用
+	Ptime      int64  `json:"ptim"`                    //发布时间
+	Ctime      int64  `json:"ctime" xorm:"created"`    //创建时间
+	//Mtime      time.Time `json:"mtime" xorm:"updated"`    //更新时间
+	Ps int `json:"ps" xorm:"-"` //
+	Pn int `json:"pn" xorm:"-"` //
 }

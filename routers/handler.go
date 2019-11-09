@@ -10,5 +10,4 @@ type Engine struct {
 	*gin.Engine
 	*adminc.HttpAdminHandler
 	*wx.HttpWxHandler
-	Port func() string
 }

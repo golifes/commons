@@ -13,6 +13,7 @@ func (e *Engine) weiXin() {
 		//r.GET("/getBiz", e.FindBizUinKey)
 		r.POST("/list", e.AddWxList)
 		r.POST("/detail", e.AddDetail)
+		r.POST("/spiderTime", e.UpdateSpiderTime)
 		//差一个入库详情页和列表数据接口
 	}
 }

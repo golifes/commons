@@ -27,7 +27,7 @@ func main() {
 	//EngDb.Sync2(new(admin.DomainAppRole))
 	//EngDb.Sync2(new(admin.DomainAppUser))
 	//EngDb.Sync2(new(wx.WeiXinList))
-	EngDb.Sync2(new(wx.List))
+	//EngDb.Sync2(new(wx.List))
 	//EngDb.Sync2(new(admin.Group))
 	//EngDb.Sync2(new(admin.Role))
 	//EngDb.Sync2(new(admin.User))
