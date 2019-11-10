@@ -128,6 +128,6 @@ type WeiXinList struct {
 	Ptime      int64  `json:"ptim"`                    //发布时间
 	Ctime      int64  `json:"ctime" xorm:"created"`    //创建时间
 	//Mtime      time.Time `json:"mtime" xorm:"updated"`    //更新时间
-	Ps int `json:"ps" xorm:"-"` //
-	Pn int `json:"pn" xorm:"-"` //
+	Ps int `json:"ps,omitempty" xorm:"-"` //
+	Pn int `json:"pn,omitempty" xorm:"-"` //
 }
