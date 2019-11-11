@@ -7,7 +7,8 @@ import (
 
 type LogicHandler interface {
 	handler
-	EsHandler
+	esHandler
+	rexHandler
 }
 
 type handler interface {
@@ -28,12 +29,29 @@ type handler interface {
 	Delete2Table(beans [][2]interface{}) error              //事物
 }
 
-type EsHandler interface {
+type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
 }
 
+type rexHandler interface {
+	Set(key string, value interface{}) bool
+	Get(key string) []byte
+	SAdd(members ...interface{}) (memList []string)
+}
 type Logic struct {
 	db wx.DbHandler
+}
+
+func (l Logic) SAdd(members ...interface{}) (memList []string) {
+	return l.db.SAdd(members...)
+}
+
+func (l Logic) Set(key string, value interface{}) bool {
+	return l.Set(key, value)
+}
+
+func (l Logic) Get(key string) []byte {
+	return l.Get(key)
 }
 
 func (l Logic) InsertEs(id string, bean interface{}) bool {

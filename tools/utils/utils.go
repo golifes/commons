@@ -47,6 +47,18 @@ func CheckError(err error, v interface{}) bool {
 	return true
 }
 
+func CheckErrorArgs(v interface{}, errs ...error) bool {
+	for _, err := range errs {
+		if err != nil {
+			log.Printf("err is %s,%s", err, v)
+			return false
+		}
+	}
+
+	return true
+
+}
+
 func FindBizStr(url string) (arr []string) {
 	fmt.Println(url)
 	//a := "http://mp.weixin.qq.com/s?__biz=MzU3ODE2NTMxNQ==&MID=2247485961&idx=1&sn=431af867d04efd973fd16df359365dd6&chksm=fd78c525ca0f4c334da2c677c1622f32058b7d3b89d255d5bb6e21a11a7f32407b67b13245bd&scene=27#wechat_redirect"

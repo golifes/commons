@@ -1,8 +1,8 @@
 package routers
 
 import (
-	"commons/http/admin"
-	"commons/http/wx"
+	"commons/http/crontroller/admin"
+	"commons/http/crontroller/wx"
 	"fmt"
 	"github.com/gin-gonic/gin"
 )

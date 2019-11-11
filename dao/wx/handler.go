@@ -4,8 +4,8 @@ import "context"
 
 type DbHandler interface {
 	MysqlHandler
-	EsHandler
-	RdxHandler
+	esHandler
+	rexHandler
 }
 
 type MysqlHandler interface {
@@ -26,11 +26,14 @@ type MysqlHandler interface {
 	Delete2Table(beans [][2]interface{}) error              //事物
 }
 
-type EsHandler interface {
+type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
 }
 
-type RdxHandler interface {
+type rexHandler interface {
+	Set(key string, value interface{}) bool
+	Get(key string) []byte
+	SAdd(members ...interface{}) (memList []string)
 }
 
 var _ DbHandler = Dao{}

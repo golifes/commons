@@ -16,6 +16,18 @@ type Dao struct {
 	esIndex string
 }
 
+func (d Dao) SAdd(members ...interface{}) (memList []string) {
+	return d.sAdd(members...)
+}
+
+func (d Dao) Set(key string, value interface{}) bool {
+	return d.set(key, value, 7*24*60)
+}
+
+func (d Dao) Get(key string) []byte {
+	return d.get(key)
+}
+
 func (d Dao) InsertEs(id string, bean interface{}) bool {
 	return d.addEsOne(id, bean)
 }
