@@ -28,7 +28,9 @@ func (d Dao) addEsOne(id string, bean interface{}) bool {
 }
 
 //批量入库
-func (d Dao) AddBulk() {
+func (d Dao) BulkDoc() {
+	bulk := d.es.Bulk()
+	bulk.Add()
 
 }
 
@@ -90,4 +92,26 @@ func (d Dao) articles(detail entiyWx.WeiXinParams, ps, pn int) (interface{}, int
 		return array, result.Hits.TotalHits.Value
 	}
 	return nil, 0
+}
+
+func (d Dao) updateEs(id string, m map[string]interface{}) bool {
+	do, err := d.es.Update().Index(d.esIndex).Id(id).Doc(m).Do(context.Background())
+	if utils.CheckErrorArgs(do, err) {
+		return true
+	}
+
+	return false
+}
+
+func (d Dao) getOneEs(id string, cols ...string) interface{} {
+	field := elastic.NewFetchSourceContext(true)
+	//field.Include("content_style")
+	field.Include(cols...)
+
+	res, err := d.es.Get().FetchSourceContext(field).Index(d.esIndex).Id(id).Do(context.Background())
+	if utils.CheckErrorArgs(res, err) {
+		bytes, _ := res.Source.MarshalJSON()
+		return bytes
+	}
+	return nil
 }

@@ -28,12 +28,16 @@ type MysqlHandler interface {
 
 type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
+	UpdateEs(id string, m map[string]interface{}) bool
+	GetOneEs(id string, cols ...string) interface{}
 }
 
 type rexHandler interface {
 	Set(key string, value interface{}) bool
 	Get(key string) []byte
 	SAdd(members ...interface{}) (memList []string)
+	SetQueue(key string, members ...interface{}) bool
+	SPop(key string, ps int64) []string
 }
 
 var _ DbHandler = Dao{}

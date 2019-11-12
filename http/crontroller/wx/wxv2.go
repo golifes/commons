@@ -26,12 +26,16 @@ func (h HttpWxHandler) AddQueue(ctx app.GContext) {
 
 	var p []entiyWx.List
 	code := e.Success
-	if !utils.CheckError(ctx.ShouldBindJSON(&p), "addList") {
+	if !utils.CheckErrorArgs("add queue", ctx.ShouldBindJSON(&p)) {
 		code = e.ParamError
 		g.Json(http.StatusOK, code, "")
 		return
 	}
 
+	//这里需要优化，支持批量操作
+	/**
+	SetQueue支持批量操作
+	*/
 	for _, v := range p {
 		articleId := v.ArticleId
 		//存在
@@ -39,16 +43,47 @@ func (h HttpWxHandler) AddQueue(ctx app.GContext) {
 			continue
 		}
 		marshal, _ := json.Marshal(v)
-		h.logic.Set(StringQueue, marshal)
+		h.logic.SetQueue(StringQueue, marshal)
 		h.logic.InsertEs(articleId, v)
 	}
-	/**
-	入redis  key articleId
-			value: url
+}
 
-	其余入es
+/**
+从set集合队列中获取数据
+params: {"ps":必填，int "pn":必填,0}
+*/
+func (h HttpWxHandler) GetQueue(ctx app.GContext) {
+	g := app.G{ctx}
+	var p entiyWx.Page
+	code := e.Success
+	if !utils.CheckErrorArgs("get queue", ctx.ShouldBindJSON(&p)) {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
 
-	更新es 用articleId去更新
-	*/
+	ps, _ := utils.Pagination(p.Ps, p.Pn, 10)
+	pop := h.logic.SPop("key", int64(ps))
+	g.Json(http.StatusOK, code, pop)
+	return
+}
 
+/**
+更新详情数据
+*/
+
+func (h HttpWxHandler) UpdateBizContent(ctx app.GContext) {
+	g := app.G{ctx}
+
+	var p entiyWx.BizContent
+	code := e.Success
+	if !utils.CheckErrorArgs("get queue", ctx.ShouldBindJSON(&p)) {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
+
+	toMap := utils.StructToMap(p)
+
+	h.logic.UpdateEs(p.ArticleId, toMap)
 }

@@ -16,6 +16,22 @@ type Dao struct {
 	esIndex string
 }
 
+func (d Dao) UpdateEs(id string, m map[string]interface{}) bool {
+	return d.updateEs(id, m)
+}
+
+func (d Dao) GetOneEs(id string, cols ...string) interface{} {
+	return d.getOneEs(id, cols...)
+}
+
+func (d Dao) SPop(key string, ps int64) []string {
+	return d.sPop(key, ps)
+}
+
+func (d Dao) SetQueue(key string, members ...interface{}) bool {
+	return d.setQueue(key, members...)
+}
+
 func (d Dao) SAdd(members ...interface{}) (memList []string) {
 	return d.sAdd(members...)
 }

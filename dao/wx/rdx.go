@@ -47,3 +47,19 @@ func (d Dao) sAdd(members ...interface{}) (memList []string) {
 	}
 	return
 }
+
+func (d Dao) setQueue(key string, members ...interface{}) bool {
+	err := d.rdx.SAdd(key, members...).Err()
+	if utils.CheckErrorArgs("add queue rdx", err) {
+		return true
+	}
+	return false
+}
+
+func (d Dao) sPop(key string, ps int64) []string {
+	result, err := d.rdx.SPopN(key, ps).Result()
+	if utils.CheckErrorArgs(result, err) {
+		return result
+	}
+	return nil
+}

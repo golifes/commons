@@ -31,15 +31,35 @@ type handler interface {
 
 type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
+	UpdateEs(id string, m map[string]interface{}) bool
+	GetOneEs(id string, cols ...string) interface{}
 }
 
 type rexHandler interface {
 	Set(key string, value interface{}) bool
 	Get(key string) []byte
 	SAdd(members ...interface{}) (memList []string)
+	SetQueue(key string, members ...interface{}) bool
+	SPop(key string, ps int64) []string
 }
 type Logic struct {
 	db wx.DbHandler
+}
+
+func (l Logic) UpdateEs(id string, m map[string]interface{}) bool {
+	return l.db.UpdateEs(id, m)
+}
+
+func (l Logic) GetOneEs(id string, cols ...string) interface{} {
+	return l.db.GetOneEs(id, cols...)
+}
+
+func (l Logic) SPop(key string, ps int64) []string {
+	return l.db.SPop(key, ps)
+}
+
+func (l Logic) SetQueue(key string, members ...interface{}) bool {
+	return l.db.SetQueue(key, members)
 }
 
 func (l Logic) SAdd(members ...interface{}) (memList []string) {
