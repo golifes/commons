@@ -33,6 +33,7 @@ type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
 	UpdateEs(id string, m map[string]interface{}) bool
 	GetOneEs(id string, cols ...string) interface{}
+	GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{})
 }
 
 type rexHandler interface {
@@ -44,6 +45,10 @@ type rexHandler interface {
 }
 type Logic struct {
 	db wx.DbHandler
+}
+
+func (l Logic) GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{}) {
+	return l.db.GetListEs(ps, pn, cols...)
 }
 
 func (l Logic) UpdateEs(id string, m map[string]interface{}) bool {

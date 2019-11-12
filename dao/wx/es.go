@@ -115,3 +115,20 @@ func (d Dao) getOneEs(id string, cols ...string) interface{} {
 	}
 	return nil
 }
+
+func (d Dao) getListEs(ps, pn int, cols ...string) ([]interface{}, interface{}) {
+	field := elastic.NewFetchSourceContext(true)
+	//field.Include("content_style")
+	field.Include(cols...)
+	result, err := d.es.Search().FetchSourceContext(field).Index(d.esIndex).Sort("ptime", true).From(ps * pn).Size(ps).Do(context.Background())
+	if utils.CheckError(err, result) {
+		array := make([]interface{}, len(result.Hits.Hits))
+		for index, hit := range result.Hits.Hits {
+			//var r ret
+			//json.Unmarshal(hit.Source, &r)
+			array[index] = hit.Source
+		}
+		return array, result.Hits.TotalHits.Value
+	}
+	return nil, 0
+}

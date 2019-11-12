@@ -30,6 +30,7 @@ type esHandler interface {
 	InsertEs(id string, bean interface{}) bool
 	UpdateEs(id string, m map[string]interface{}) bool
 	GetOneEs(id string, cols ...string) interface{}
+	GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{})
 }
 
 type rexHandler interface {

@@ -44,8 +44,7 @@ func (h HttpWxHandler) AddQueue(ctx app.GContext) {
 		}
 		var queue entiyWx.Queue
 		queue.Url = v.ContentURL
-		queue.Biz = v.Biz
-		queue.OwId = v.OwId
+		queue.ArticleId = v.ArticleId
 		marshal, _ := json.Marshal(queue)
 		h.logic.SetQueue(StringQueue, string(marshal))
 		h.logic.InsertEs(articleId, v)
@@ -67,8 +66,14 @@ func (h HttpWxHandler) GetQueue(ctx app.GContext) {
 	}
 
 	ps, _ := utils.Pagination(p.Ps, p.Pn, 10)
-	pop := h.logic.SPop("key", int64(ps))
-	g.Json(http.StatusOK, code, pop)
+	pop := h.logic.SPop(StringQueue, int64(ps))
+	m := make([]entiyWx.Queue, 0)
+	for _, v := range pop {
+		var q entiyWx.Queue
+		json.Unmarshal([]byte(v), &q)
+		m = append(m, q)
+	}
+	g.Json(http.StatusOK, code, m)
 	return
 }
 
@@ -90,4 +95,40 @@ func (h HttpWxHandler) UpdateBizContent(ctx app.GContext) {
 	toMap := utils.StructToMap(p)
 
 	h.logic.UpdateEs(p.ArticleId, toMap)
+	g.Json(http.StatusOK, code, "")
+
+}
+
+func (h HttpWxHandler) GetList(ctx app.GContext) {
+	g := app.G{ctx}
+
+	var p entiyWx.Page
+	code := e.Success
+	if !utils.CheckErrorArgs("get queue", ctx.ShouldBindJSON(&p)) {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
+	ps, pn := utils.Pagination(p.Ps, p.Pn, 10)
+
+	listEs, count := h.logic.GetListEs(ps, pn, []string{"article_id", "ow_id", "title", "content_url", "ptime"}...)
+	m := make(map[string]interface{})
+	m["count"] = count
+	m["list"] = listEs
+	g.Json(http.StatusOK, code, m)
+}
+
+func (h HttpWxHandler) GetOne(ctx app.GContext) {
+	g := app.G{ctx}
+
+	var p entiyWx.Id
+	code := e.Success
+	if !utils.CheckErrorArgs("get queue", ctx.ShouldBindJSON(&p)) {
+		code = e.ParamError
+		g.Json(http.StatusOK, code, "")
+		return
+	}
+
+	es := h.logic.GetOneEs(p.Id, []string{"content"}...)
+	g.Json(http.StatusOK, code, es)
 }

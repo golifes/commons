@@ -16,6 +16,10 @@ type Dao struct {
 	esIndex string
 }
 
+func (d Dao) GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{}) {
+	return d.getListEs(ps, pn, cols...)
+}
+
 func (d Dao) UpdateEs(id string, m map[string]interface{}) bool {
 	return d.updateEs(id, m)
 }

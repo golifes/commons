@@ -22,9 +22,11 @@ func (e *Engine) weiXin() {
 	{
 
 		//提交列表数据
-		v2.POST("/queue", e.AddQueue, middleware.API())
-		v2.GET("/queue", e.GetQueue)
-		v2.POST("/article", e.UpdateBizContent)
+		v2.POST("/queue", e.AddQueue, middleware.API()) //提交队列任务
+		v2.GET("/queue", e.GetQueue)                    //获取队列任务
+		v2.POST("/detail", e.UpdateBizContent)          //更新详情数据
+		v2.GET("/list", e.GetList)                      //获取前端列表数据
+		v2.GET("/detail", e.GetOne)                     //获取详情数据
 
 	}
 }
