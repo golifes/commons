@@ -59,7 +59,7 @@ func (l Logic) SPop(key string, ps int64) []string {
 }
 
 func (l Logic) SetQueue(key string, members ...interface{}) bool {
-	return l.db.SetQueue(key, members)
+	return l.db.SetQueue(key, members...)
 }
 
 func (l Logic) SAdd(members ...interface{}) (memList []string) {

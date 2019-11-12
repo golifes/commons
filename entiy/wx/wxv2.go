@@ -11,3 +11,9 @@ type BizContent struct {
 	ContentStyle string `json:"content_style" binding:"required"`
 	NickName     string `json:"nick_name"`
 }
+
+type Queue struct {
+	Url  string `json:"url"`
+	Biz  string `json:"biz"`
+	OwId int    `json:"ow_id"`
+}

@@ -36,13 +36,13 @@ set集合
 */
 func (d Dao) sAdd(members ...interface{}) (memList []string) {
 
-	for member := range members {
+	for _, member := range members {
 		if d.rdx.SIsMember(ArticleIdQueue, member).Val() {
 			continue
 		}
-		err := d.rdx.SAdd(ArticleIdQueue, members).Err()
+		err := d.rdx.SAdd(ArticleIdQueue, members...).Err()
 		if utils.CheckErrorArgs(fmt.Sprintf("add queue id is %s", member), err) {
-			memList = append(memList, string(member))
+			memList = append(memList, member.(string))
 		}
 	}
 	return

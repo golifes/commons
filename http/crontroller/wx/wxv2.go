@@ -42,8 +42,12 @@ func (h HttpWxHandler) AddQueue(ctx app.GContext) {
 		if memList := h.logic.SAdd(articleId); memList == nil {
 			continue
 		}
-		marshal, _ := json.Marshal(v)
-		h.logic.SetQueue(StringQueue, marshal)
+		var queue entiyWx.Queue
+		queue.Url = v.ContentURL
+		queue.Biz = v.Biz
+		queue.OwId = v.OwId
+		marshal, _ := json.Marshal(queue)
+		h.logic.SetQueue(StringQueue, string(marshal))
 		h.logic.InsertEs(articleId, v)
 	}
 }
