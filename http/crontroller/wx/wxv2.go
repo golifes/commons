@@ -7,6 +7,7 @@ import (
 	"commons/pkg/e"
 	"commons/tools/utils"
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -69,7 +70,7 @@ func (h HttpWxHandler) GetQueue(ctx app.GContext) {
 	m := make([]entiyWx.Queue, 0)
 	for _, v := range pop {
 		var q entiyWx.Queue
-		json.Unmarshal([]byte(v), &q)
+		_ = json.Unmarshal([]byte(v), &q)
 		m = append(m, q)
 	}
 	g.Json(http.StatusOK, code, m)
@@ -136,20 +137,35 @@ func (h HttpWxHandler) GetOne(ctx app.GContext) {
 */
 func (h HttpWxHandler) GetWxBizList(ctx app.GContext) {
 
-	var p entiyWx.Ps
+	var p entiyWx.BizList
 	g, err := h.common(ctx, &p)
 	if err != nil {
 		return
 	}
-	ps, pn := utils.Pagination(p.Ps, p.Pn, 10)
+	ps, pn := utils.Pagination(p.Ps, 1, 10)
 
 	weiXin := make([]entiyWx.WxBiz, 0)
-	unix := utils.StrTimeToUnix()
+	//unix := utils.StrTimeToUnix()
 
-	query := []string{" forbid = ? and ", " stime <= ? "}
-	values := []interface{}{1, unix}
+	query := []string{" forbid = ? and ", " stime <= ? and run != 1"}
+	values := []interface{}{1, p.Stime}
 
 	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin", "id desc ", query, values, ps, pn)
+
+	_values := []interface{}{}
+	if count != 0 {
+		xin := list.(*[]entiyWx.WxBiz)
+		for _, v := range *xin {
+			_values = append(_values, v.Biz)
+		}
+		//这里调用更新方法
+		_count := len(_values)
+		s := utils.JoinS(_count)
+		affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Run: true}, []string{"run"}, []string{" biz in ( " + s + ")"}, _values)
+		fmt.Println(affect, err)
+
+	}
+
 	m := make(map[string]interface{}, 0)
 	m["count"] = count
 	m["list"] = list

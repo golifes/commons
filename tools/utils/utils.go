@@ -199,6 +199,18 @@ func PrintQuery(src interface{}) {
 	log.Printf("es sql--->%s", string(data))
 }
 
+func JoinS(count int) string {
+	s := ""
+	for i := 0; i < count; i++ {
+		if i < count-1 {
+			s += " ?, "
+		} else {
+			s += " ? "
+		}
+	}
+	return s
+}
+
 /**
 获取本地ip地址
 */

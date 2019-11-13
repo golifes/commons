@@ -222,7 +222,7 @@ func (h HttpWxHandler) AddDetail(ctx app.GContext) {
 	return
 }
 
-func (h HttpWxHandler) UpdateSpiderTime(ctx app.GContext) {
+func (h HttpWxHandler) SpiderRun(ctx app.GContext) {
 	g := app.G{ctx}
 
 	var p entiyWx.SpiderTime
@@ -234,11 +234,11 @@ func (h HttpWxHandler) UpdateSpiderTime(ctx app.GContext) {
 	}
 	cols := []string{}
 	if p.Num == 0 {
-		cols = append(cols, "stime")
+		cols = append(cols, "stime", "run")
 	} else {
-		cols = append(cols, "stime", "num")
+		cols = append(cols, "stime", "num", "run")
 	}
-	affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Stime: p.Stime}, cols, []string{" biz = ?"}, []interface{}{p.Biz})
+	affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Stime: p.Stime, Run: false, Num: p.Num}, cols, []string{" biz = ? "}, []interface{}{p.Biz})
 	if !utils.CheckError(err, affect) {
 		g.Json(http.StatusOK, e.UpdateWxError, p.Biz)
 	} else {

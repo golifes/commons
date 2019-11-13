@@ -15,7 +15,7 @@ func (e *Engine) weiXin() {
 		//r.GET("/getBiz", e.FindBizUinKey)
 		r.POST("/list", e.AddWxList)
 		r.POST("/detail", e.AddDetail)
-		r.POST("/spiderTime", e.UpdateSpiderTime)
+		//r.POST("/spiderTime", e.UpdateSpiderTime)
 		//差一个入库详情页和列表数据接口
 	}
 
@@ -27,6 +27,8 @@ func (e *Engine) weiXin() {
 		v2.GET("/biz", e.GetWxBizList)
 		//更新微信key  如果biz是biz，则是万能key
 		v2.POST("/biz", e.UpdateBizKey)
+
+		v2.POST("/run", e.SpiderRun)
 
 		//提交列表数据
 		v2.POST("/queue", e.AddQueue)                 //提交队列任务

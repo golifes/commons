@@ -10,7 +10,7 @@ type WeiXin struct {
 	Url    string `json:"url" binding:"required"`   //微信头像
 	Desc   string `json:"desc" binding:"required"`  //公号描述
 	Biz    string `json:"biz" binding:"required"`   //公号biz
-	Count  string `json:"count"`                    //公号文章数量
+	Count  int64  `json:"count"`                    //公号文章数量
 	Forbid int    `json:"forbid" xorm:"default 1"`  //是否被禁用
 	Key    string `json:"key"`                      //公号Key
 	Uin    string `json:"uin"`                      //用户唯一标识
@@ -21,6 +21,7 @@ type WeiXin struct {
 	Num    int64  `json:"num"`                      //总共多少页(抓取的页数)
 	Incr   bool   `json:"incr"`                     //是否增量抓取
 	Run    bool   `json:"run"`                      //当前是否在运行抓取 当前运行抓取是否结束  抓取结束后更新 stime num 和finish run run从抓取进行变为未抓取
+	Msg    string `json:"msg"`                      //
 }
 
 type WxApi struct {

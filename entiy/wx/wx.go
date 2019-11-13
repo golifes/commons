@@ -77,6 +77,10 @@ type Ps struct {
 	Ps int `json:"ps"`
 	Pn int `json:"pn"`
 }
+type BizList struct {
+	Ps    int `json:"ps" binding:"required"`
+	Stime int `json:"stime" binding:"required"`
+}
 
 type List struct {
 	ArticleId              string `json:"article_id" xorm:"article_id"` //主键id
@@ -115,7 +119,7 @@ type List struct {
 type SpiderTime struct {
 	Biz   string `json:"biz" binding:"required"`
 	Stime int64  `json:"stime" binding:"required"`
-	Num   int    `json:"pn"`
+	Num   int64  `json:"num"`
 }
 
 type WeiXinList struct {
