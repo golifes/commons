@@ -1,5 +1,7 @@
 
 ```
+GOOS=linux GOARCH=amd64 go build hello.go
+
 
 获取公号biz等信息(给手机端用)
     uri:/api/v2/wx/biz

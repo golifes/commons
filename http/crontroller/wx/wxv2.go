@@ -135,7 +135,13 @@ func (h HttpWxHandler) GetOne(ctx app.GContext) {
 获取抓取公号数据 每次请求返回2条数据
 */
 func (h HttpWxHandler) GetWxBizList(ctx app.GContext) {
-	g := app.G{Context: ctx}
+
+	var p entiyWx.Ps
+	g, err := h.common(ctx, &p)
+	if err != nil {
+		return
+	}
+	ps, pn := utils.Pagination(p.Ps, p.Pn, 10)
 
 	weiXin := make([]entiyWx.WxBiz, 0)
 	unix := utils.StrTimeToUnix()
@@ -143,7 +149,7 @@ func (h HttpWxHandler) GetWxBizList(ctx app.GContext) {
 	query := []string{" forbid = ? and ", " stime <= ? "}
 	values := []interface{}{1, unix}
 
-	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin", "id desc ", query, values, 2, 1)
+	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin", "id desc ", query, values, ps, pn)
 	m := make(map[string]interface{}, 0)
 	m["count"] = count
 	m["list"] = list

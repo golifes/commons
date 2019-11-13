@@ -7,16 +7,12 @@ import (
 	"net/http"
 )
 
-/**
-给别人提供api的白名单
-*/
-
-func API() gin.HandlerFunc {
+func Spider() gin.HandlerFunc {
 	return func(c app.GContext) {
 
 		g := app.G{c}
 		ip := g.ClientIP()
-		ipList := [...]string{"39.108.190.186"}
+		ipList := [...]string{"219.142.7.99", "127.0.0.1"}
 		f := false
 		for _, v := range ipList {
 			if ip == v {

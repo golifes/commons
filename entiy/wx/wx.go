@@ -75,6 +75,7 @@ type WxList struct {
 
 type Ps struct {
 	Ps int `json:"ps"`
+	Pn int `json:"pn"`
 }
 
 type List struct {
