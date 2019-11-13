@@ -16,9 +16,10 @@ type WeiXin struct {
 	Uin    string `json:"uin"`                      //用户唯一标识
 	Ctime  int64  `json:"ctime" xorm:"created"`     //创建时间
 	Mtime  int64  `json:"mtime" xorm:"updated"`     //更新时间
-	Stime  int64  `json:"stime" xorm:"stime"`       //最后一次抓取时间
+	Stime  int64  `json:"stime" xorm:"stime"`       //最后一次抓取时间  页面添加公号的时候这个时间设置成前一天时间
 	Note   string `json:"note"`                     //备用字段
 	Num    int64  `json:"num"`                      //总共多少页(抓取的页数)
+	Incr   bool   `json:"incr"`                     //是否增量抓取
 }
 
 type WxApi struct {

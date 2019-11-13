@@ -20,6 +20,10 @@ func (e *Engine) weiXin() {
 	}
 	v2 := e.Group("/api/v2/wx")
 	{
+		//获取biz和key等信息
+		v2.GET("/biz", e.GetWxBizList)
+		//更新微信key  如果biz是biz，则是万能key
+		v2.POST("/biz", e.UpdateBizKey)
 
 		//提交列表数据
 		v2.POST("/queue", e.AddQueue, middleware.API()) //提交队列任务

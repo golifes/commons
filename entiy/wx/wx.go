@@ -53,6 +53,7 @@ type WxBiz struct {
 	WxId string `json:"wx_id"`
 	Uin  string `json:"uin"`
 	Key  string `json:"key"`
+	Incr bool   `json:"incr"`
 }
 
 type ForBidWx struct {

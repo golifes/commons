@@ -15,7 +15,8 @@ import (
 )
 
 const (
-	str = `(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`
+	str       = `(?:')|(?:--)|(/\\*(?:.|[\\n\\r])*?\\*/)|(\b(select|update|and|or|delete|insert|trancate|char|chr|into|substr|ascii|declare|exec|count|master|into|drop|execute)\b)`
+	DayFormat = "2006-01-02"
 )
 
 /**
@@ -165,8 +166,8 @@ func Time2Str(t time.Time, format string) string {
 }
 
 func NowTime() time.Time {
-	timeUnix := time.Now().Format("2006-01-02")
-	location, _ := time.ParseInLocation("2006-01-02", timeUnix, time.Local)
+	timeUnix := time.Now().Format(DayFormat)
+	location, _ := time.ParseInLocation(DayFormat, timeUnix, time.Local)
 	return location
 }
 
@@ -177,6 +178,14 @@ func Str2Time(format, value string) time.Time {
 
 	fmt.Println(t)
 	return t
+}
+
+//获取今天的unix时间
+func StrTimeToUnix() int64 {
+	format := time.Now().Format(DayFormat)
+	loc, _ := time.LoadLocation("Asia/Shanghai")
+	tt, _ := time.ParseInLocation(DayFormat, format, loc)
+	return tt.Unix()
 }
 
 /**
