@@ -20,6 +20,7 @@ type WeiXin struct {
 	Note   string `json:"note"`                     //备用字段
 	Num    int64  `json:"num"`                      //总共多少页(抓取的页数)
 	Incr   bool   `json:"incr"`                     //是否增量抓取
+	Run    bool   `json:"run"`                      //当前是否在运行抓取 当前运行抓取是否结束  抓取结束后更新 stime num 和finish run run从抓取进行变为未抓取
 }
 
 type WxApi struct {

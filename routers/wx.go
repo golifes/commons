@@ -23,7 +23,7 @@ func (e *Engine) weiXin() {
 	v2 := e.Group("/api/v2/wx")
 	v2.Use(middleware.Spider())
 	{
-		//获取biz和key等信息
+		//获取biz和key等信息 这里接手一个时间,获取每个时间段的
 		v2.GET("/biz", e.GetWxBizList)
 		//更新微信key  如果biz是biz，则是万能key
 		v2.POST("/biz", e.UpdateBizKey)
