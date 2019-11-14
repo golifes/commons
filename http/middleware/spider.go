@@ -12,7 +12,7 @@ func Spider() gin.HandlerFunc {
 
 		g := app.G{c}
 		ip := g.ClientIP()
-		ipList := [...]string{"219.142.7.99", "127.0.0.1"}
+		ipList := [...]string{"219.142.7.99", "127.0.0.1", "58.87.64.219"}
 		f := false
 		for _, v := range ipList {
 			if ip == v {
