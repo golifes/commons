@@ -120,6 +120,7 @@ type SpiderTime struct {
 	Biz   string `json:"biz" binding:"required"`
 	Stime int64  `json:"stime" binding:"required"`
 	Num   int64  `json:"num"`
+	Msg   string `json:"msg"`
 }
 
 type WeiXinList struct {

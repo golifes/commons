@@ -6,7 +6,7 @@ type List struct {
 	Mid                    int64  `json:"mid"`                          //
 	Idx                    int64  `json:"idx"`                          //
 	OwId                   int64  `json:"ow_id"`                        //自定义微信id
-	Oid                    int64  `json:"oid" xorm:"oid"`               //原始id
+	Oid                    int64  `json:"oid" xorm:"oid"`               //原始id,就是公号数据中的id
 	AudioFileid            int64  `json:"audio_fileid" xorm:"audio_fileid"`
 	Title                  string `json:"title"  xorm:"title"`
 	ContentURL             string `json:"content_url" xorm:"content_url"`
