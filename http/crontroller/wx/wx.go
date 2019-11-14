@@ -234,11 +234,11 @@ func (h HttpWxHandler) SpiderRun(ctx app.GContext) {
 	}
 	cols := []string{}
 	if p.Num == 0 {
-		cols = append(cols, "stime", "run")
+		cols = append(cols, "stime", "run", "msg")
 	} else {
-		cols = append(cols, "stime", "num", "run")
+		cols = append(cols, "stime", "num", "run", "msg")
 	}
-	affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Stime: p.Stime, Run: false, Num: p.Num}, cols, []string{" biz = ? "}, []interface{}{p.Biz})
+	affect, err := h.logic.UpdateStruct(g.NewContext(ctx), wx.WeiXin{Stime: p.Stime, Run: false, Num: p.Num, Msg: p.Msg}, cols, []string{" biz = ? "}, []interface{}{p.Biz})
 	if !utils.CheckError(err, affect) {
 		g.Json(http.StatusOK, e.UpdateWxError, p.Biz)
 	} else {
