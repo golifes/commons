@@ -53,7 +53,7 @@ func (d Dao) sAdd(members ...interface{}) (memList []string) {
 */
 func (d Dao) sisMember(key string, member interface{}) bool {
 	result, err := d.rdx.SIsMember(key, member).Result()
-	if utils.CheckErrorArgs(result, err) {
+	if utils.CheckErrorArgs(result, err) && result {
 		return true
 	}
 

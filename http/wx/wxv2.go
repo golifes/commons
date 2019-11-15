@@ -52,6 +52,18 @@ func (h HttpWxHandler) AddQueue(ctx app.GContext) {
 	g.Json(http.StatusOK, code, "")
 }
 
+func (h HttpWxHandler) ErrorQueue(ctx app.GContext) {
+	var p entiyWx.Queue
+	code := e.Success
+	g, err := h.common(ctx, &p)
+	if err != nil {
+		return
+	}
+	marshal, _ := json.Marshal(p)
+	queue := h.logic.SetQueue(StringQueue, string(marshal))
+	g.Json(http.StatusOK, code, queue)
+}
+
 /**
 从set集合队列中获取数据
 params: {"ps":必填，int "pn":必填,0}

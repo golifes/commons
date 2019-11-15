@@ -5,7 +5,8 @@ package Blacklist
 */
 
 type Blacklist struct {
-	Ip       string
-	Type     int
-	TypeName string
+	Id   int
+	Ip   string
+	Name string //谁的名称
+	Type int    //是谁的标记id
 }
