@@ -1,6 +1,7 @@
 package main
 
 import (
+	"commons/model/Blacklist"
 	"commons/model/wx"
 	"fmt"
 	_ "github.com/go-sql-driver/mysql"
@@ -24,7 +25,7 @@ func main() {
 	}
 
 	EngDb.Sync2(new(wx.WeiXin))
-
+	EngDb.Sync(new(Blacklist.Blacklist))
 	//EngDb.Sync2(new(admin.DomainAppRole))
 	//EngDb.Sync2(new(admin.DomainAppUser))
 	//EngDb.Sync2(new(wx.WeiXinList))
