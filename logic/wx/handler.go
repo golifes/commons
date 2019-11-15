@@ -42,9 +42,14 @@ type rexHandler interface {
 	SAdd(members ...interface{}) (memList []string)
 	SetQueue(key string, members ...interface{}) bool
 	SPop(key string, ps int64) []string
+	SisMember(key string, member interface{}) bool
 }
 type Logic struct {
 	db wx.DbHandler
+}
+
+func (l Logic) SisMember(key string, member interface{}) bool {
+	return l.db.SisMember(key, member)
 }
 
 func (l Logic) GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{}) {

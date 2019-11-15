@@ -39,6 +39,7 @@ type rexHandler interface {
 	SAdd(members ...interface{}) (memList []string)
 	SetQueue(key string, members ...interface{}) bool
 	SPop(key string, ps int64) []string
+	SisMember(key string, member interface{}) bool
 }
 
 var _ DbHandler = Dao{}

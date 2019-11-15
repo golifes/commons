@@ -48,6 +48,18 @@ func (d Dao) sAdd(members ...interface{}) (memList []string) {
 	return
 }
 
+/**
+判断一个元素是否属于集合
+*/
+func (d Dao) sisMember(key string, member interface{}) bool {
+	result, err := d.rdx.SIsMember(key, member).Result()
+	if utils.CheckErrorArgs(result, err) {
+		return true
+	}
+
+	return false
+}
+
 func (d Dao) setQueue(key string, members ...interface{}) bool {
 	err := d.rdx.SAdd(key, members...).Err()
 	if utils.CheckErrorArgs("add queue rdx", err) {

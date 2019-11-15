@@ -16,6 +16,18 @@ type Dao struct {
 	esIndex string
 }
 
+func NewDb(path string) *Dao {
+	//load 结构体绑定
+	var c Config
+	config.Load(path, &c)
+	es, index := config.LoadElastic(c.Es)
+	return &Dao{engine: config.NewDb(c.Db.Admin), rdx: config.LoadRedis(c.Rdx), es: es, esIndex: index}
+}
+
+func (d Dao) SisMember(key string, member interface{}) bool {
+	return d.sisMember(key, member)
+}
+
 func (d Dao) GetListEs(ps, pn int, cols ...string) ([]interface{}, interface{}) {
 	return d.getListEs(ps, pn, cols...)
 }
@@ -50,14 +62,6 @@ func (d Dao) Get(key string) []byte {
 
 func (d Dao) InsertEs(id string, bean interface{}) bool {
 	return d.addEsOne(id, bean)
-}
-
-func NewDb(path string) *Dao {
-	//load 结构体绑定
-	var c Config
-	config.Load(path, &c)
-	es, index := config.LoadElastic(c.Es)
-	return &Dao{engine: config.NewDb(c.Db.Admin), rdx: config.LoadRedis(c.Rdx), es: es, esIndex: index}
 }
 
 func (d Dao) Exist(ctx context.Context, bean ...interface{}) bool {
