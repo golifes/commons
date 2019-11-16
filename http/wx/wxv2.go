@@ -158,8 +158,12 @@ func (h HttpWxHandler) GetWxBizList(ctx app.GContext) {
 
 	weiXin := make([]entiyWx.WxBiz, 0)
 	//unix := utils.StrTimeToUnix()
-
-	query := []string{" (forbid = ? and  stime <= ? and run != 1 )", " or msg !='ok' "}
+	query := []string{}
+	if p.Incr {
+		query = append(query, "incr = 1 and forbid = ? and  stime <= ? and run != 1 ")
+	} else {
+		query = append(query, " (forbid = ? and  stime <= ? and run != 1 )", " or msg !='ok' ")
+	}
 	values := []interface{}{1, p.Stime}
 
 	list, count := h.logic.FindOne(g.NewContext(ctx), &weiXin, "wei_xin", "id desc ", query, values, ps, pn)

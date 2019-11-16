@@ -78,8 +78,9 @@ type Ps struct {
 	Pn int `json:"pn"`
 }
 type BizList struct {
-	Ps    int `json:"ps" binding:"required"`
-	Stime int `json:"stime" binding:"required"`
+	Ps    int  `json:"ps" binding:"required"`
+	Incr  bool `json:"incr"`
+	Stime int  `json:"stime" binding:"required"`
 }
 
 type List struct {
