@@ -4,7 +4,7 @@ GOOS=linux GOARCH=amd64 go build hello.go
 
 
 获取公号biz等信息(给手机端用)
-    uri:/api/v2/wx/biz
+    uri:/api/v2/wx/phoneBiz
     params:{"ps":10,"pn":1,"stime":1573653933}  stime:指的抓取时间,必须传递(比如可以指定三小时前没抓去的公号)
     method:get
     res:
